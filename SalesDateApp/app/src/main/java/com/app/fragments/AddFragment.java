@@ -3,6 +3,7 @@ package com.app.fragments;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,14 +91,22 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String name = editText_food_name.getText().toString();
-                String classification=spinner_Classification.getSelectedItem().toString();
-                String time=spinner_category.getSelectedItem().toString();
-                mDBHelper.insert("food",new String[]{"userid","dbfoodname","classification","category","imagepath"},new Object[]{userid,name,classification,time,picturePath});
-                Toast.makeText(view.getContext(), "Added", Toast.LENGTH_LONG).show();
-                editText_food_name.setText("");
-                imageView.setImageBitmap(null);
-                spinner_Classification.setSelection(0);
-                spinner_category.setSelection(0);
+                String empty = "";
+                if (!name.contentEquals(empty) ){
+                    //name is not empty
+                    String classification=spinner_Classification.getSelectedItem().toString();
+                    String time=spinner_category.getSelectedItem().toString();
+                    mDBHelper.insert("food",new String[]{"userid","dbfoodname","classification","category","imagepath"},new Object[]{userid,name,classification,time,picturePath});
+                    Toast.makeText(view.getContext(), "Added", Toast.LENGTH_LONG).show();
+                    editText_food_name.setText("");
+                    imageView.setImageBitmap(null);
+                    spinner_Classification.setSelection(0);
+                    spinner_category.setSelection(0);
+                }
+                else {
+                    AlertDialog diaBox = WarningForEmptyName();
+                    diaBox.show();
+                }
             }
         });
         return view;
@@ -150,5 +160,25 @@ public class AddFragment extends Fragment {
         }
     }
 
+    private AlertDialog WarningForEmptyName()
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getActivity())
+                //set message, title, and icon
+                .setTitle("The item name can't be empty!")
+                .setMessage("Please enter item name.")
+                .setIcon(R.drawable.p4_warning_icon)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+    }
 }
 
