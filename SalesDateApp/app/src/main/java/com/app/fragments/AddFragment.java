@@ -33,7 +33,7 @@ public class AddFragment extends Fragment {
     ImageView imageView;
     EditText editText_food_name;
     Spinner spinner_Classification;
-    Spinner spinner_time;
+    Spinner spinner_category;
     private MyDBHelper mDBHelper;
     View view;
     String picturePath = "";
@@ -69,10 +69,10 @@ public class AddFragment extends Fragment {
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, spinnerItems);
         spinner_Classification.setAdapter(spinnerAdapter);
 
-        spinner_time = (Spinner) view.findViewById(R.id.spinner_time);
-        String[] spinnerItems_time = {"Recess", "Lunch"};
-        ArrayAdapter<String> spinnerAdapter_time = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, spinnerItems_time);
-        spinner_time.setAdapter(spinnerAdapter_time);
+        spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
+        String[] spinnerItems_category = {"Beverage", "Food", "Snack"};
+        ArrayAdapter<String> spinnerAdapter_time = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, spinnerItems_category);
+        spinner_category.setAdapter(spinnerAdapter_time);
 
         imageView = (ImageView) view.findViewById(R.id.imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -88,13 +88,13 @@ public class AddFragment extends Fragment {
             public void onClick(View view) {
                 String name = editText_food_name.getText().toString();
                 String classification=spinner_Classification.getSelectedItem().toString();
-                String time=spinner_time.getSelectedItem().toString();
-                mDBHelper.insert("food",new String[]{"userid","dbfoodname","classification","time","imagepath"},new Object[]{userid,name,classification,time,picturePath});
+                String time=spinner_category.getSelectedItem().toString();
+                mDBHelper.insert("food",new String[]{"userid","dbfoodname","classification","category","imagepath"},new Object[]{userid,name,classification,time,picturePath});
                 Toast.makeText(view.getContext(), "Added", Toast.LENGTH_LONG).show();
                 editText_food_name.setText("");
                 imageView.setImageBitmap(null);
                 spinner_Classification.setSelection(0);
-                spinner_time.setSelection(0);
+                spinner_category.setSelection(0);
             }
         });
         return view;

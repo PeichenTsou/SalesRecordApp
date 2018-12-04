@@ -124,7 +124,7 @@ public class PrintFragment extends Fragment {
                 //add period & date
                 if (list_count.size() > 0) {
                     for (int x = 0; x < list_count.size(); x++) {
-                        CountItem apple = new CountItem(list_count.get(x).get("date").toString(), list_count.get(x).get("period").toString(), list_food.get(i).get("dbfoodname").toString(), list_food.get(i).get("classification").toString(), list_food.get(i).get("time").toString(), list_count.get(x).get("count").toString());
+                        CountItem apple = new CountItem(list_count.get(x).get("date").toString(), list_count.get(x).get("period").toString(), list_food.get(i).get("dbfoodname").toString(), list_food.get(i).get("classification").toString(), list_food.get(i).get("category").toString(), list_count.get(x).get("count").toString());
                         countList.add(apple);
                     }
                 }
