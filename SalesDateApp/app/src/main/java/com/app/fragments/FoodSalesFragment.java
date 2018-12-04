@@ -32,6 +32,7 @@ import static android.content.ContentValues.TAG;
 public class FoodSalesFragment extends Fragment {
     private MyDBHelper mDBHelper;
     private List<Map> foodList = new ArrayList<Map>();
+    private List<Map> foodList_Category = new ArrayList<Map>();
     //    ListView foodListView;
     GridView foodListView;
     static String userid = "";
@@ -65,9 +66,11 @@ public class FoodSalesFragment extends Fragment {
 
         initFoodSales();
         adapter = new FoodAdaptor(view.getContext(), R.layout.food_item, foodList);
+        adapter = new FoodAdaptor(view.getContext(), R.layout.food_item, foodList_Category);
         foodListView = (GridView) view.findViewById(R.id.food_list);
         foodListView.setAdapter(adapter);
 
+        //activate when click any item in menu
         foodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -81,8 +84,23 @@ public class FoodSalesFragment extends Fragment {
         return view;
     }
 
+    //be called whenever initalizing or clicking "menu" on navigation
     private void initFoodSales() {
         foodList = mDBHelper.queryListMap("select * from food where userid=?", new String[]{userid});
+        //make the menu be ordered by category
+        String[] categoryNameArray = com.app.fragments.AddFragment.spinnerItems_category;
+        for (int i=0; i< categoryNameArray.length; i++)
+        {
+            String categoryName = categoryNameArray[i];
+            List<Map> resultByCategory = mDBHelper.queryListMap("select * from food where userid=? and category=?", new String[]{userid, categoryName});
+            if(i == 0){
+                foodList_Category = resultByCategory;
+            }
+            else {
+                foodList_Category.addAll(resultByCategory);
+            }
+        }
+
     }
 
     @Override

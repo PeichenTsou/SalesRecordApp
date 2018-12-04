@@ -38,6 +38,8 @@ public class AddFragment extends Fragment {
     View view;
     String picturePath = "";
     static String userid="";
+    static public String[] spinnerItems_category = {"Beverage", "Food", "Snack"}; //add category
+
     public final static int MY_PERMISSIONS_REQUEST_READ_CONTACTS=1;
     public static AddFragment newInstance(String param1) {
         AddFragment fragment = new AddFragment();
@@ -70,7 +72,7 @@ public class AddFragment extends Fragment {
         spinner_Classification.setAdapter(spinnerAdapter);
 
         spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
-        String[] spinnerItems_category = {"Beverage", "Food", "Snack"};
+//        String[] spinnerItems_category = {"Beverage", "Food", "Snack"};  //add category
         ArrayAdapter<String> spinnerAdapter_time = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, spinnerItems_category);
         spinner_category.setAdapter(spinnerAdapter_time);
 
