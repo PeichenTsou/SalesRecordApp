@@ -100,7 +100,6 @@ public class FoodSalesFragment extends Fragment {
                 foodList_Category.addAll(resultByCategory);
             }
         }
-
     }
 
     @Override

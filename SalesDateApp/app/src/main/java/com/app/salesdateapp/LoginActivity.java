@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
             mDBHelper.insert("user", new String[]{"name", "password"}, new Object[]{"user2", "1111"});
         }
 
+        //check user account & password
         tb_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
