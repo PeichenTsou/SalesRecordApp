@@ -30,7 +30,7 @@ import static android.content.ContentValues.TAG;
 public class FoodSalesFragment extends Fragment {
     private MyDBHelper mDBHelper;
     private List<Map> foodList = new ArrayList<Map>();
-//    ListView foodListView;
+    //    ListView foodListView;
     GridView foodListView;
     static String userid = "";
     View view;

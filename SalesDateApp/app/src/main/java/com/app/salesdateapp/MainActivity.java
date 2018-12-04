@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .setActiveColor("#008577")
                 .setBarBackgroundColor("#ffffff");
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.menu, "Menu"))
-                .addItem(new BottomNavigationItem(R.mipmap.count, "Count"))
-                .addItem(new BottomNavigationItem(R.mipmap.print, "Print"))
+                .addItem(new BottomNavigationItem(R.mipmap.count, "Data"))
+                .addItem(new BottomNavigationItem(R.mipmap.print, "Export"))
                 .addItem(new BottomNavigationItem(R.mipmap.add, "Add"))
                 .setFirstSelectedPosition(lastSelectedPosition)
                 .initialise();
