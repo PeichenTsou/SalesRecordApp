@@ -111,7 +111,7 @@ public class FoodSalesFragment extends Fragment {
     private void deleteItem() {
         mDBHelper.execSQL("delete from food where id=?", new String[]{foodList.get(item_index).get("id").toString()});
         //
-        String itemname = foodList.get(item_index).get("name").toString();
+        String itemname = foodList.get(item_index).get("dbfoodname").toString();
         String messageText = "\"" + itemname + "\" was deleted" ;
         Toast.makeText(view.getContext(), messageText, Toast.LENGTH_SHORT).show();
         initFoodSales();
@@ -122,7 +122,7 @@ public class FoodSalesFragment extends Fragment {
     //add delete item message
     private AlertDialog AskOptionToDeleteItem()
     {
-        String itemname = foodList.get(item_index).get("name").toString();
+        String itemname = foodList.get(item_index).get("dbfoodname").toString();
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getActivity())
                 //set message, title, and icon
                 .setTitle("Delete")

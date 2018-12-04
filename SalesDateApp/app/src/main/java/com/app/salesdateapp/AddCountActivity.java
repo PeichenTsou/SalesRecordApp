@@ -45,7 +45,7 @@ public class AddCountActivity extends AppCompatActivity {
         foodid = intent.getStringExtra("foodid");
         Log.e("foodid", foodid);
         List<Map> map = mDBHelper.queryListMap("select * from food where id=?", new String[]{foodid});
-        textView_food.setText(map.get(0).get("name").toString());
+        textView_food.setText(map.get(0).get("dbfoodname").toString());
         imageView_addcount.setImageBitmap(ImageUtil.scaleBitmap(BitmapFactory.decodeFile(map.get(0).get("imagepath").toString()), 300, 300));
 
 

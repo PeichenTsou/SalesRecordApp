@@ -89,7 +89,7 @@ public class AddFragment extends Fragment {
                 String name = editText_food_name.getText().toString();
                 String classification=spinner_Classification.getSelectedItem().toString();
                 String time=spinner_time.getSelectedItem().toString();
-                mDBHelper.insert("food",new String[]{"userid","name","classification","time","imagepath"},new Object[]{userid,name,classification,time,picturePath});
+                mDBHelper.insert("food",new String[]{"userid","dbfoodname","classification","time","imagepath"},new Object[]{userid,name,classification,time,picturePath});
                 Toast.makeText(view.getContext(), "Added", Toast.LENGTH_LONG).show();
                 editText_food_name.setText("");
                 imageView.setImageBitmap(null);
