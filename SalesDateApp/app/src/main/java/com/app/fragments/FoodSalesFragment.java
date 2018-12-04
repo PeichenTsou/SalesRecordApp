@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,7 +30,8 @@ import static android.content.ContentValues.TAG;
 public class FoodSalesFragment extends Fragment {
     private MyDBHelper mDBHelper;
     private List<Map> foodList = new ArrayList<Map>();
-    ListView foodListView;
+//    ListView foodListView;
+    GridView foodListView;
     static String userid = "";
     View view;
     FoodAdaptor adapter;
@@ -61,7 +63,7 @@ public class FoodSalesFragment extends Fragment {
 
         initFoodSales();
         adapter = new FoodAdaptor(view.getContext(), R.layout.food_item, foodList);
-        foodListView = (ListView) view.findViewById(R.id.food_list);
+        foodListView = (GridView) view.findViewById(R.id.food_list);
         foodListView.setAdapter(adapter);
 
         foodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

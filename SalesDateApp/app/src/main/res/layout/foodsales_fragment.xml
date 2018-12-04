@@ -5,9 +5,26 @@
     android:layout_height="match_parent"
     tools:context="com.app.fragments.FoodSalesFragment">
 
+    <!--<ListView-->
+        <!--android:id="@+id/food_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
 
-    <ListView
+    <GridView
         android:id="@+id/food_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:stretchMode="spacingWidth"
+        android:columnWidth="100dp"
+        android:gravity="center|bottom"
+        android:horizontalSpacing="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:numColumns="5"
+        android:verticalSpacing="10dp"
+        >
+    </GridView>
+
 </FrameLayout>
