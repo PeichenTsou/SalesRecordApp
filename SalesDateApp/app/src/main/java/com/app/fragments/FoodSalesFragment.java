@@ -1,8 +1,10 @@
 package com.app.fragments;
 
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -95,14 +97,52 @@ public class FoodSalesFragment extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 1:
-                mDBHelper.execSQL("delete from food where id=?", new String[]{foodList.get(item_index).get("id").toString()});
-                Toast.makeText(view.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                initFoodSales();
-                adapter = new FoodAdaptor(view.getContext(), R.layout.food_item, foodList);
-                foodListView.setAdapter(adapter);
+
+                //add delete item message
+                AlertDialog diaBox = AskOptionToDeleteItem();
+                diaBox.show();
+
                 break;
         }
         return super.onContextItemSelected(item);
     }
+
+    //add delete item message
+    private void deleteItem() {
+        mDBHelper.execSQL("delete from food where id=?", new String[]{foodList.get(item_index).get("id").toString()});
+        //
+        String itemname = foodList.get(item_index).get("name").toString();
+        String messageText = "\"" + itemname + "\" was deleted" ;
+        Toast.makeText(view.getContext(), messageText, Toast.LENGTH_SHORT).show();
+        initFoodSales();
+        adapter = new FoodAdaptor(view.getContext(), R.layout.food_item, foodList);
+        foodListView.setAdapter(adapter);
+    }
+
+    //add delete item message
+    private AlertDialog AskOptionToDeleteItem()
+    {
+        String itemname = foodList.get(item_index).get("name").toString();
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getActivity())
+                //set message, title, and icon
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to delete item \"" + itemname + "\"? This can not be undone.")
+                .setIcon(R.drawable.p3_delete_icon)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        deleteItem();
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+    }
+
+
 }
 

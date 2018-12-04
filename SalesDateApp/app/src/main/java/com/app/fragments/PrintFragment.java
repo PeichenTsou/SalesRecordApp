@@ -3,7 +3,9 @@ package com.app.fragments;
 import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,19 +72,48 @@ public class PrintFragment extends Fragment {
         button_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Map> list_food = mDBHelper.queryListMap("select * from food where userid=?", new String[]{userid});
-                Log.e("delete",list_food.size()+"");
-                for (int i = 0; i < list_food.size(); i++) {
-                    Log.e("delete",list_food.get(i).get("id").toString()+"   foodid");
-                    mDBHelper.execSQL("delete From count where foodid=?", new String[]{list_food.get(i).get("id").toString()});
-                }
-                Toast.makeText(view.getContext(),"Cleared",Toast.LENGTH_SHORT).show();
-                tv.setText("");
+                //add delete data message
+                AlertDialog diaBox = AskOptionToDeleteData(view);
+                diaBox.show();
             }
         });
         return view;
     }
 
+    //add delete data message
+    private void deleteData(View view) {
+        List<Map> list_food = mDBHelper.queryListMap("select * from food where userid=?", new String[]{userid});
+        Log.e("delete",list_food.size()+"");
+        for (int i = 0; i < list_food.size(); i++) {
+            Log.e("delete",list_food.get(i).get("id").toString()+"   foodid");
+            mDBHelper.execSQL("delete From count where foodid=?", new String[]{list_food.get(i).get("id").toString()});
+        }
+        Toast.makeText(view.getContext(),"Cleared",Toast.LENGTH_SHORT).show();
+        tv.setText("");
+    }
+
+    //add delete data message
+    private AlertDialog AskOptionToDeleteData(final View view)
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getActivity())
+                //set message, title, and icon
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to delete the data? This can not be undone.")
+                .setIcon(R.drawable.p3_delete_icon)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        deleteData(view);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+    }
 
     private String initCounts() {
         countList.clear();

@@ -26,7 +26,8 @@
         android:layout_marginTop="200dp"
         android:layout_marginRight="135dp"
         android:ems="10"
-        android:hint="Name" />
+        android:hint="Name"
+        android:text="user1"/>
 
     <EditText
         android:id="@+id/editText_password"
@@ -38,7 +39,8 @@
         android:layout_marginRight="135dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="Password"/>
+        android:hint="Password"
+        android:text="1111"/>
 
     <Button
         android:id="@+id/button_signin"
