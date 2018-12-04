@@ -7,15 +7,19 @@ public class CountItem {
     private String count;
     //add period
     private String period;
+    //add date
+    private String date;
 
-    //add period
-    public CountItem(String period, String name, String classification, String time, String count) {
+    //add period & date
+    public CountItem(String date, String period, String name, String classification, String time, String count) {
         this.name = name;
         this.classification = classification;
         this.time = time;
         this.count = count;
         //add period
         this.period = period;
+        //add date
+        this.date = date;
     }
 
     public String getName() {
@@ -52,4 +56,6 @@ public class CountItem {
 
     //add period
     public String getPeriod() { return period; }
+    //add date
+    public String getDate() { return date; }
 }

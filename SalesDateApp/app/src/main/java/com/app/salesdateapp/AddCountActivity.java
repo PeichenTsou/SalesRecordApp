@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.app.DBUtil.ImageUtil;
 import com.app.DBUtil.MyDBHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -61,8 +63,13 @@ public class AddCountActivity extends AppCompatActivity {
                 if(isBetweenLunchTime){
                     currentPeriod = "Lunch";
                 }
-                //add period
-                List<Map> map_count = mDBHelper.queryListMap("select * from count where foodid=? and period=?", new String[]{foodid, currentPeriod});
+                //add date
+                Date currentDate = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                String formattedDate = df.format(currentDate);
+
+                //add period & date
+                List<Map> map_count = mDBHelper.queryListMap("select * from count where foodid=? and period=? and date=?", new String[]{foodid, currentPeriod, formattedDate});
 
                 if (map_count.size() > 0) {
                     int old_count = Integer.valueOf(map_count.get(0).get("count").toString());
@@ -71,8 +78,8 @@ public class AddCountActivity extends AppCompatActivity {
                             new String[]{"id"}, new String[]{map_count.get(0).get("id").toString()});
                 } else {
                     int new_count = Integer.valueOf(textView_count.getText().toString());
-                    //add period
-                    mDBHelper.insert("count", new String[]{"foodid", "count", "period"}, new Object[]{foodid, new_count, currentPeriod});
+                    //add period & date
+                    mDBHelper.insert("count", new String[]{"foodid", "count", "period", "date"}, new Object[]{foodid, new_count, currentPeriod, formattedDate});
                 }
                 finish();
             }
