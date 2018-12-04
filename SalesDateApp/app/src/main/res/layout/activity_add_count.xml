@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="460dp"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -77,9 +77,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="340dp"
         android:text="TextView"
-        android:textSize="20dp" />
+        android:textSize="25dp" />
 
     <Button
         android:id="@+id/button_add_count"
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="517dp"
         android:text="ADD" />
 
 </RelativeLayout>

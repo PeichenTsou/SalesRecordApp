@@ -9,12 +9,12 @@
     <item
         android:id="@+id/navigation_count"
         android:icon="@mipmap/count"
-        android:title="Count" />
+        android:title="Data" />
 
     <item
         android:id="@+id/navigation_print"
         android:icon="@mipmap/print"
-        android:title="Print" />
+        android:title="Export" />
 
     <item
         android:id="@+id/navigation_add"

@@ -7,11 +7,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
 
             <TextView
@@ -19,10 +21,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="14dp"
-                android:text="Food Name"
-                android:textSize="15dp" />
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="185dp"
+                android:text=""
+                android:textStyle="bold"
+                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/editText_foodname"
@@ -30,16 +33,18 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:ems="10" />
+                android:layout_marginTop="185dp"
+                android:ems="10"
+                android:hint="Item Name"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="110dp"
-                android:text="Classification"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="281dp"
+                android:text=""
+                android:textStyle="bold"
                 android:textSize="20dp" />
 
             <Spinner
@@ -48,15 +53,16 @@
                 android:layout_height="43dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="150dp" />
+                android:layout_marginTop="281dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="200dp"
-                android:text="Time"
+                android:layout_marginLeft="160dp"
+                android:layout_marginTop="371dp"
+                android:text=""
+                android:textStyle="bold"
                 android:textSize="20dp" />
 
             <Spinner
@@ -65,15 +71,16 @@
                 android:layout_height="43dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="240dp" />
+                android:layout_marginTop="371dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/button_add"
+                android:layout_alignStart="@+id/button_add"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="300dp"
-                android:text="Image"
+                android:layout_marginTop="490dp"
+                android:text=""
                 android:textSize="20dp" />
 
             <ImageView
@@ -82,8 +89,8 @@
                 android:layout_height="100dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="340dp"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                android:layout_marginTop="471dp"
+                app:srcCompat="@drawable/p3" />
 
             <Button
                 android:id="@+id/button_add"
@@ -91,9 +98,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="450dp"
+                android:layout_marginTop="650dp"
                 android:layout_marginBottom="80dp"
-                android:text="Add" />
+                android:text="ADD TO THE MENU" />
         </RelativeLayout>
 
     </ScrollView>
