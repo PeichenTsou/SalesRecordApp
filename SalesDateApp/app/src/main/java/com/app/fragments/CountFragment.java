@@ -58,8 +58,12 @@ public class CountFragment extends Fragment {
             List<Map> list_count = mDBHelper.queryListMap("select * from count where foodid=?", new String[]{list_food.get(i).get("id").toString()});
            if(list_count.size()>0)
            {
-               CountItem apple = new CountItem(list_food.get(i).get("name").toString(), list_food.get(i).get("classification").toString(), list_food.get(i).get("time").toString(), list_count.get(0).get("count").toString());
-               countList.add(apple);
+               //add period2
+               for (int x = 0; x < list_count.size(); x++) {
+                   CountItem apple = new CountItem(list_count.get(x).get("period").toString(), list_food.get(i).get("name").toString(), list_food.get(i).get("classification").toString(), list_food.get(i).get("time").toString(), list_count.get(x).get("count").toString());
+                   countList.add(apple);
+               }
+
            }
         }
     }

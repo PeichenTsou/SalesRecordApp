@@ -40,7 +40,8 @@ public class MyDBHelper extends DataBaseHelper {
         String[] a = new String[3];
         a[0] = "CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(50), password VARCHAR(50))";
         a[1] = "CREATE TABLE food (id INTEGER PRIMARY KEY AUTOINCREMENT,userid VARCHAR(50),name VARCHAR(50), classification VARCHAR(50), time VARCHAR(50), imagepath VARCHAR(200))";
-        a[2] = "CREATE TABLE count (id INTEGER PRIMARY KEY AUTOINCREMENT, foodid VARCHAR(50), count INTEGER)";
+        //add period
+        a[2] = "CREATE TABLE count (id INTEGER PRIMARY KEY AUTOINCREMENT, foodid VARCHAR(50), count INTEGER, period VARCHAR(50))";
         return a;
     }
 

@@ -121,13 +121,19 @@ public class PrintFragment extends Fragment {
         for (int i = 0; i < list_food.size(); i++) {
             List<Map> list_count = mDBHelper.queryListMap("select * from count where foodid=?", new String[]{list_food.get(i).get("id").toString()});
             if (list_count.size() > 0) {
-                CountItem apple = new CountItem(list_food.get(i).get("name").toString(), list_food.get(i).get("classification").toString(), list_food.get(i).get("time").toString(), list_count.get(0).get("count").toString());
-                countList.add(apple);
+                //add period
+                if (list_count.size() > 0) {
+                    for (int x = 0; x < list_count.size(); x++) {
+                        CountItem apple = new CountItem(list_count.get(x).get("period").toString(), list_food.get(i).get("name").toString(), list_food.get(i).get("classification").toString(), list_food.get(i).get("time").toString(), list_count.get(x).get("count").toString());
+                        countList.add(apple);
+                    }
+                }
             }
         }
         String str = "";
         for (int i = 0; i < countList.size(); i++) {
-            str = str + countList.get(i).getName() + "  " + countList.get(i).getClassification() + "  " + countList.get(i).getTime() + "  " + countList.get(i).getCount() + "\n";
+            //add period
+            str = str + countList.get(i).getPeriod() + "\t" + countList.get(i).getName() + "\t" + countList.get(i).getClassification() + "\t" + countList.get(i).getTime() + "\t" + countList.get(i).getCount() + "\n";
         }
 
         return str;

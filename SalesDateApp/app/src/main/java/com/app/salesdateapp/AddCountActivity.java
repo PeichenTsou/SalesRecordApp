@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.app.DBUtil.ImageUtil;
 import com.app.DBUtil.MyDBHelper;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,20 @@ public class AddCountActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Map> map_count = mDBHelper.queryListMap("select * from count where foodid=?", new String[]{foodid});
+                //add period
+                int from = 1130; //lunch time *need to check
+                int to = 1330;
+                Calendar c = Calendar.getInstance();
+                int t = c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE);
+                boolean isBetweenLunchTime = to > from && t >= from && t <= to || to < from && (t >= from || t <= to);
+
+                String currentPeriod = "Recess";
+                if(isBetweenLunchTime){
+                    currentPeriod = "Lunch";
+                }
+                //add period
+                List<Map> map_count = mDBHelper.queryListMap("select * from count where foodid=? and period=?", new String[]{foodid, currentPeriod});
+
                 if (map_count.size() > 0) {
                     int old_count = Integer.valueOf(map_count.get(0).get("count").toString());
                     int new_count = old_count + Integer.valueOf(textView_count.getText().toString());
@@ -57,7 +71,8 @@ public class AddCountActivity extends AppCompatActivity {
                             new String[]{"id"}, new String[]{map_count.get(0).get("id").toString()});
                 } else {
                     int new_count = Integer.valueOf(textView_count.getText().toString());
-                    mDBHelper.insert("count", new String[]{"foodid", "count"}, new Object[]{foodid, new_count});
+                    //add period
+                    mDBHelper.insert("count", new String[]{"foodid", "count", "period"}, new Object[]{foodid, new_count, currentPeriod});
                 }
                 finish();
             }
