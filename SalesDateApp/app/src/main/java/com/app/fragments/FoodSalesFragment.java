@@ -124,7 +124,6 @@ public class FoodSalesFragment extends Fragment {
         return super.onContextItemSelected(item);
     }
 
-    //add delete item message
     private void deleteItem() {
         mDBHelper.execSQL("delete from food where id=?", new String[]{foodList.get(item_index).get("id").toString()});
         //
@@ -142,7 +141,7 @@ public class FoodSalesFragment extends Fragment {
         String itemname = foodList.get(item_index).get("dbfoodname").toString();
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getActivity())
                 //set message, title, and icon
-                .setTitle("Delete")
+                .setTitle("Delete Item")
                 .setMessage("Are you sure you want to delete item \"" + itemname + "\"? This can not be undone.")
                 .setIcon(R.drawable.p3_delete_icon)
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {

@@ -15,6 +15,9 @@ import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -64,6 +67,7 @@ public class AddFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
 
@@ -81,7 +85,6 @@ public class AddFragment extends Fragment {
         spinner_Classification.setAdapter(spinnerAdapter);
 
         spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
-//        String[] spinnerItems_category = {"Beverage", "Food", "Snack"};  //add category
         ArrayAdapter<String> spinnerAdapter_time = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, spinnerItems_category);
         spinner_category.setAdapter(spinnerAdapter_time);
 
@@ -130,6 +133,7 @@ public class AddFragment extends Fragment {
             startActivityForResult(intent, 0);
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -145,7 +149,6 @@ public class AddFragment extends Fragment {
                 break;
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -174,9 +177,39 @@ public class AddFragment extends Fragment {
                 .setTitle("The item name can't be empty!")
                 .setMessage("Please enter item name.")
                 .setIcon(R.drawable.p4_warning_icon)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+                .setNegativeButton("Return", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.options_menu_addfragment, menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        AlertDialog diaBox = WarningForDeleteWholeMenu();
+        diaBox.show();
+
+        return true;
+    }
+
+    private AlertDialog WarningForDeleteWholeMenu()
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getActivity())
+                //set message, title, and icon
+                .setTitle("Reset Menu")
+                .setMessage("Are you sure you want to delete ALL items in menu? This can not be undone.")
+                .setIcon(R.drawable.p4_warning_icon)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        mDBHelper.execSQL("delete from food");
+                        dialog.dismiss();
+                        Toast.makeText(view.getContext(),"Menu has been reset.",Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
