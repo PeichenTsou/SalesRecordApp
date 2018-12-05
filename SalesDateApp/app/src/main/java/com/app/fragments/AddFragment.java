@@ -40,7 +40,14 @@ public class AddFragment extends Fragment {
     View view;
     String picturePath = "";
     static String userid="";
-    static public String[] spinnerItems_category = {"Beverage", "Food", "Snack"}; //add category
+    static public String[] spinnerItems_category = {"Savoury snacks",
+            "Sweet Snacks",
+            "Sandwiches, rolls and other bread products (eg garlic bread, hot cheese rolls)",
+            "Fruit",
+            "Yoghurt, icecream, and dairy desserts",
+            "Drinks",
+            "Hot dishes",
+            "Other"}; //add category
 
     public final static int MY_PERMISSIONS_REQUEST_READ_CONTACTS=1;
     public static AddFragment newInstance(String param1) {
