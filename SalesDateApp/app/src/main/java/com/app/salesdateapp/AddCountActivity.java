@@ -82,21 +82,29 @@ public class AddCountActivity extends AppCompatActivity {
                 if (map_count.size() > 0) {
                     int old_count = Integer.valueOf(map_count.get(0).get("count").toString());
                     int update_count = old_count + new_count;
-                    mDBHelper.update("count", new String[]{"count"}, new Object[]{update_count},
-                            new String[]{"id"}, new String[]{map_count.get(0).get("id").toString()});
-                    Toast.makeText(context,"You have added " + foodName + "*" + new_count + ".",Toast.LENGTH_LONG).show();
+                    if (update_count >= 0){
+                        mDBHelper.update("count", new String[]{"count"}, new Object[]{update_count},
+                                new String[]{"id"}, new String[]{map_count.get(0).get("id").toString()});
+                        Toast.makeText(context,"You have added " + foodName + "*" + new_count + ".",Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                    else {
+                        AlertDialog diaBox = WarningForMinorRecord();
+                        diaBox.show();
+                    }
                 } else {
                     if (new_count > 0){
                         //add period & date
                         mDBHelper.insert("count", new String[]{"foodid", "count", "period", "date"}, new Object[]{foodid, new_count, currentPeriod, formattedDate});
                         //show how many items user buys
                         Toast.makeText(context,"You have added " + foodName + "*" + new_count + ".",Toast.LENGTH_LONG).show();
+                        finish();
                     }
                     else {
-                        Toast.makeText(context,"You can not add minor item to an empty record! \nNothing was added.",Toast.LENGTH_LONG).show();
+                        AlertDialog diaBox = WarningForMinorRecord();
+                        diaBox.show();
                     }
                 }
-                finish();
             }
         });
     }
@@ -104,9 +112,12 @@ public class AddCountActivity extends AppCompatActivity {
     public void iv_1(View view) {
         textView_count = (TextView) findViewById(R.id.textView_count);
         num1 = Integer.parseInt(textView_count.getText().toString());
-//        if (num1 > 1) {
+        if (num1 == 1) {
+            num1 -= 2;
+        }
+        else {
             num1 -= 1;
-//        }
+        }
         textView_count.setText(Integer.toString(num1));
     }
 
@@ -114,8 +125,29 @@ public class AddCountActivity extends AppCompatActivity {
         textView_count = (TextView) findViewById(R.id.textView_count);
         num1 = Integer.parseInt(textView_count.getText().toString());
         if (num1 < 999) {
-            num1 += 1;
+            if (num1 == -1){
+                num1 += 2;
+            }
+            else {
+                num1 += 1;
+            }
         }
         textView_count.setText(Integer.toString(num1));
+    }
+
+    private AlertDialog WarningForMinorRecord()
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(this)
+                //set message, title, and icon
+                .setTitle("You can not have minor amount of item in the record!")
+                .setMessage("Nothing was added.")
+                .setIcon(R.drawable.p4_warning_icon)
+                .setNegativeButton("Return", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
     }
 }
