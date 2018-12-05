@@ -75,7 +75,7 @@ public class FoodSalesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(view.getContext(), AddCountActivity.class);
-                intent.putExtra("foodid", foodList.get(i).get("id").toString());
+                intent.putExtra("foodid", foodList_Category.get(i).get("id").toString());
                 startActivity(intent);
             }
         });
