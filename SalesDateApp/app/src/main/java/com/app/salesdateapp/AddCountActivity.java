@@ -1,9 +1,12 @@
 package com.app.salesdateapp;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.DBUtil.ImageUtil;
 import com.app.DBUtil.MyDBHelper;
@@ -39,6 +43,7 @@ public class AddCountActivity extends AppCompatActivity {
         textView_count = (TextView) findViewById(R.id.textView_count);
         button = (Button) findViewById(R.id.button_add_count);
         mDBHelper = MyDBHelper.getInstance(getApplicationContext());
+        final Context context = this;
 
         getIntent();
         Intent intent = getIntent();
@@ -67,32 +72,41 @@ public class AddCountActivity extends AppCompatActivity {
                 Date currentDate = Calendar.getInstance().getTime();
                 SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
                 String formattedDate = df.format(currentDate);
-
                 //add period & date
                 List<Map> map_count = mDBHelper.queryListMap("select * from count where foodid=? and period=? and date=?", new String[]{foodid, currentPeriod, formattedDate});
+                //show how many items user buys
+                List<Map> map_count_getName = mDBHelper.queryListMap("select dbfoodname from food where id=?", new String[]{foodid});
+                String foodName = map_count_getName.get(0).get("dbfoodname").toString();
 
+                int new_count = Integer.valueOf(textView_count.getText().toString());
                 if (map_count.size() > 0) {
                     int old_count = Integer.valueOf(map_count.get(0).get("count").toString());
-                    int new_count = old_count + Integer.valueOf(textView_count.getText().toString());
-                    mDBHelper.update("count", new String[]{"count"}, new Object[]{new_count},
+                    int update_count = old_count + new_count;
+                    mDBHelper.update("count", new String[]{"count"}, new Object[]{update_count},
                             new String[]{"id"}, new String[]{map_count.get(0).get("id").toString()});
+                    Toast.makeText(context,"You have added " + foodName + "*" + new_count + ".",Toast.LENGTH_LONG).show();
                 } else {
-                    int new_count = Integer.valueOf(textView_count.getText().toString());
-                    //add period & date
-                    mDBHelper.insert("count", new String[]{"foodid", "count", "period", "date"}, new Object[]{foodid, new_count, currentPeriod, formattedDate});
+                    if (new_count > 0){
+                        //add period & date
+                        mDBHelper.insert("count", new String[]{"foodid", "count", "period", "date"}, new Object[]{foodid, new_count, currentPeriod, formattedDate});
+                        //show how many items user buys
+                        Toast.makeText(context,"You have added " + foodName + "*" + new_count + ".",Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(context,"You can not add minor item to an empty record! \nNothing was added.",Toast.LENGTH_LONG).show();
+                    }
                 }
                 finish();
             }
         });
     }
 
-
     public void iv_1(View view) {
         textView_count = (TextView) findViewById(R.id.textView_count);
         num1 = Integer.parseInt(textView_count.getText().toString());
-        if (num1 > 1) {
+//        if (num1 > 1) {
             num1 -= 1;
-        }
+//        }
         textView_count.setText(Integer.toString(num1));
     }
 
