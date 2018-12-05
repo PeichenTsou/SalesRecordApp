@@ -90,7 +90,7 @@ public class AddCountActivity extends AppCompatActivity {
     public void iv_1(View view) {
         textView_count = (TextView) findViewById(R.id.textView_count);
         num1 = Integer.parseInt(textView_count.getText().toString());
-        if (num1 > 1) {
+        if (num1 > 1 || num1< 0) {
             num1 -= 1;
         }
         textView_count.setText(Integer.toString(num1));
@@ -99,7 +99,7 @@ public class AddCountActivity extends AppCompatActivity {
     public void iv_2(View view) {
         textView_count = (TextView) findViewById(R.id.textView_count);
         num1 = Integer.parseInt(textView_count.getText().toString());
-        if (num1 < 999) {
+        if (num1 < 999 ) {
             num1 += 1;
         }
         textView_count.setText(Integer.toString(num1));
