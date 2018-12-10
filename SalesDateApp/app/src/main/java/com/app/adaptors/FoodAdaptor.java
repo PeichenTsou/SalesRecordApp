@@ -30,7 +30,12 @@ public class FoodAdaptor extends ArrayAdapter {
 
         ImageView foodImage = (ImageView) view.findViewById(R.id.fooditem_food_image);
         TextView foodName = (TextView) view.findViewById(R.id.fooditem_food_name);
-        foodImage.setImageBitmap(ImageUtil.scaleBitmap(BitmapFactory.decodeFile(food_item.get("imagepath").toString()),300,300));
+        String foodImagePath = food_item.get("imagepath").toString();
+        if (foodImagePath == null){
+            foodImagePath = "";
+        }
+        foodImage.setImageBitmap(ImageUtil.scaleBitmap(BitmapFactory.decodeFile(foodImagePath),300,300));
+//        foodImage.setImageBitmap(ImageUtil.scaleBitmap(BitmapFactory.decodeFile(food_item.get("imagepath").toString()),300,300));
         foodName.setText(food_item.get("dbfoodname").toString());
         return view;
     }
