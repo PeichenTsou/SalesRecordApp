@@ -72,32 +72,41 @@ public class AddCountActivity extends AppCompatActivity {
                 Date currentDate = Calendar.getInstance().getTime();
                 SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
                 String formattedDate = df.format(currentDate);
+
+                // New count record for each adding action
+//                SimpleDateFormat tf = new SimpleDateFormat("h:mm a");
+                SimpleDateFormat tf = new SimpleDateFormat("HH:mm:ss");
+                String formattedTime = tf.format(currentDate);
+
                 //add period & date
-                List<Map> map_count = mDBHelper.queryListMap("select * from count where foodid=? and period=? and date=?", new String[]{foodid, currentPeriod, formattedDate});
+//                List<Map> map_count = mDBHelper.queryListMap("select * from count where foodid=? and period=? and date=?", new String[]{foodid, currentPeriod, formattedDate});
+                List<Map> map_count = mDBHelper.queryListMap("select SUM(add_count), add_date, add_period from add_record where add_foodid=? group by add_period, add_date", new String[]{foodid});
                 //show how many items user buys
                 List<Map> map_count_getName = mDBHelper.queryListMap("select dbfoodname from food where id=?", new String[]{foodid});
                 String foodName = map_count_getName.get(0).get("dbfoodname").toString();
 
                 int new_count = Integer.valueOf(textView_count.getText().toString());
-                if (map_count.size() > 0) {
-                    int old_count = Integer.valueOf(map_count.get(0).get("count").toString());
+                if (map_count.size() > 0 && map_count.get(0).get("SUM(add_count)") != null) {
+                    int old_count = Integer.valueOf(map_count.get(0).get("SUM(add_count)").toString());
                     int update_count = old_count + new_count;
                     if (update_count >= 0){
-                        mDBHelper.update("count", new String[]{"count"}, new Object[]{update_count},
-                                new String[]{"id"}, new String[]{map_count.get(0).get("id").toString()});
+//                        mDBHelper.update("count", new String[]{"count"}, new Object[]{update_count}, new String[]{"id"}, new String[]{map_count.get(0).get("id").toString()});
                         Toast.makeText(context,"You have added " + foodName + "*" + new_count + ".",Toast.LENGTH_LONG).show();
+                        // New count record for each adding action
+                        mDBHelper.insert("add_record", new String[]{"add_foodid", "add_count", "add_period", "add_date", "add_time"}, new Object[]{foodid, new_count, currentPeriod, formattedDate, formattedTime});
                         finish();
                     }
                     else {
                         AlertDialog diaBox = WarningForMinorRecord();
                         diaBox.show();
                     }
-                } else {
+                } else { // if (map_count.size() < 0)
                     if (new_count > 0){
-                        //add period & date
-                        mDBHelper.insert("count", new String[]{"foodid", "count", "period", "date"}, new Object[]{foodid, new_count, currentPeriod, formattedDate});
+//                        mDBHelper.insert("count", new String[]{"foodid", "count", "period", "date"}, new Object[]{foodid, new_count, currentPeriod, formattedDate});
                         //show how many items user buys
                         Toast.makeText(context,"You have added " + foodName + "*" + new_count + ".",Toast.LENGTH_LONG).show();
+                        // New count record for each adding action
+                        mDBHelper.insert("add_record", new String[]{"add_foodid", "add_count", "add_period", "add_date", "add_time"}, new Object[]{foodid, new_count, currentPeriod, formattedDate, formattedTime});
                         finish();
                     }
                     else {

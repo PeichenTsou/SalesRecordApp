@@ -28,14 +28,14 @@ public class CountAdaptor extends ArrayAdapter {
         TextView count_item_date = (TextView) view.findViewById(R.id.count_item_date);
         TextView count_item_period = (TextView) view.findViewById(R.id.count_item_period);
         TextView count_item_name = (TextView) view.findViewById(R.id.count_item_name);
-        TextView count_item_classification = (TextView) view.findViewById(R.id.count_item_classification);
+//        TextView count_item_classification = (TextView) view.findViewById(R.id.count_item_classification);
         TextView count_item_time = (TextView) view.findViewById(R.id.count_item_time);
         TextView count_item_count = (TextView) view.findViewById(R.id.count_item_count);
 
         count_item_date.setText(countItem.getDate());
         count_item_period.setText(countItem.getPeriod());
         count_item_name.setText(countItem.getName());
-        count_item_classification.setText(countItem.getClassification());
+//        count_item_classification.setText(countItem.getClassification());
         count_item_time.setText(countItem.getTime());
         count_item_count.setText(countItem.getCount()+"");
         return view;
